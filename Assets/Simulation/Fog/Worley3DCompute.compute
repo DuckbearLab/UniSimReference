@@ -1,0 +1,49 @@
+﻿#pragma kernel CSMain
+#pragma kernel Normalize
+
+
+RWTexture3D<float4> Result;
+StructuredBuffer<float3> Points;
+int CellsPerAxis;
+
+float3 PointAtCell(int3 cell) 
+{
+	int cellsPlusSurround = CellsPerAxis + 2;
+	return Points[cell.x * cellsPlusSurround * cellsPlusSurround + cell.y * cellsPlusSurround + cell.z];
+}
+
+float4 Worley(uint3 id) 
+{
+	int3 cell = floor(id * CellsPerAxis / 400);
+	cell += 1; //transform from normal to surrounded
+	float minDistance = 10000;
+	for (int x = -1; x < 2; x++) 
+	{
+		for (int y = -1; y < 2; y++) 
+		{
+			for (int z = -1; z < 2; z++) 
+			{
+				float l = length(PointAtCell(cell + int3(x, y, z)));
+				if (l < minDistance)
+					minDistance = l;
+			}
+		}
+	}
+	return float4(minDistance, minDistance, minDistance, 1);
+}
+
+[numthreads(8,8,8)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+	Result[id] = Worley(id);
+}
+
+float Max;
+
+[numthreads(8,8,8)]
+void Normalize (uint3 id : SV_DispatchThreadID)
+{
+	// TODO: insert actual code here!
+
+	Result[id] = 1-Result[id]/Max;
+} 

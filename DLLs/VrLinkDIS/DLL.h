@@ -1,0 +1,1 @@
+#define VRLINK_DIS_DLL_API extern "C" __declspec(dllexport)

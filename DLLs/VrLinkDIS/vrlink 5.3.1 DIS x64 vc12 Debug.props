@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets">
+    <Import Project="vrlink 5.3.1 DIS x64 vc12.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>vlutild.lib;matrixd.lib;mtld.lib;vlDISd.lib;vld.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>vlutild.lib;matrixd.lib;mtld.lib;vlDISd.lib;vld.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command>xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vlutild.dll" $(TargetDir) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\matrixd.dll" $(TargetDir) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\mtld.dll"    $(TargetDir) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vlDISd.dll"  $(TargetDir) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vld.dll"     $(TargetDir) /D /K /Y /S /I
+
+mkdir C:\BL_Runtime\$(SolutionName)
+
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vlutild.dll" C:\BL_Runtime\$(SolutionName) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\matrixd.dll" C:\BL_Runtime\$(SolutionName) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\mtld.dll"    C:\BL_Runtime\$(SolutionName) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vlDISd.dll"  C:\BL_Runtime\$(SolutionName) /D /K /Y /S /I
+xcopy "\\files\sdk\MaK\vrlink5.3.1_vc12\bin64\vld.dll"     C:\BL_Runtime\$(SolutionName) /D /K /Y /S /I
+
+%(Command)</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
